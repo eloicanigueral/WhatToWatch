@@ -5,11 +5,11 @@
     "description": "WtW picks a random video from your Youtube WatchLater playlist or current playlist.",
 
     "action": {
-        "default_popup": "popup.html",
+        "default_popup": "popup/popup.html",
         "default_icon": "icons/icons.png"
     },
 
-    "permissions": ["activeTab", "storage"],
+    "permissions": ["activeTab", "storage", "scripting"],
     "host_permissions": ["*://*.youtube.com/*"]
 }
 
