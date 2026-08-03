@@ -7,7 +7,8 @@
 
 
 ### popup
-    - to be created in a new branch! 
+    - mirar el funcionament de quan esta a una playlist.. tant del checkbox com dels ifs. pq si esta a una playlist normal o directament a la de WL surt lu mateix (i tb el checkbox...)
+    - Shauria de separar playlist random de la WL??? tipu tenir en compte o no? ... 
 
 
 ---
