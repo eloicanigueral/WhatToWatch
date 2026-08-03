@@ -3,8 +3,8 @@
 ### manifest.json
 - [ ] deleted comments:
 
-        - necesito el storage com a permission?? o no?
-        - a lu de host-permissions... vull tb q funcioni a alres webs no? i m porti a yt.. per tant nose i hauria d borrar
+        - necesito el storage com a permission?? o no? -> //em sera UTIL per recordar l'ultim video i no repetirlo per exemple..., o per recordar el checkbox de WL?...
+
 
 ### popup
     - to be created in a new branch! 

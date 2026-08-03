@@ -17,7 +17,7 @@ button.addEventListener('click', function() { // when clicking the main button:
       if (/* activeTab is youtube.com */ tab.url.includes("youtube.com")){ //ALL THIS HAVE TO BE DONE IN THE SAME tab.url...
         //have to look if we're in a randompage/video or in a playlist
   
-        if (/* we're on a playlist page */ tab.url.includes("list=")){ // the url has something like: ?list=... //THIS DOESNT WORK.... ONLY IT WORKS IF I CLICK DIRECTLY FROM YOUTUBE WATCH LATER... 
+        if (/* we're on a playlist page */ tab.url.includes("list=")){ // the url has something like: ?list=...
           //MOST DIFFICULT I THINK.. TO DO LATER ON... but if we're in the WL playlist, the checkbox shouldnt appear....
   
           //have to check if the chekbox is active...
@@ -28,7 +28,7 @@ button.addEventListener('click', function() { // when clicking the main button:
             statusText.innerText = "Playing random video from the Watch Later list";
 
             
-          } else { //HAVE TO CHECK THIS... BECAUSE IF IM WATCHING A VIDEO FROM A PLAYLIST (THE PLAYLIST IN A SIDE AND THE VIDEO IN BIG) IT DOESN'T ENTER HERE... bc the link has not list.. it doesnt work in ANY list.. because lists open a video directly, and the playlist in a side
+          } else { 
             //pick random video from the current playlist
   
             // browser.tabs.update({ url: randomURL });
