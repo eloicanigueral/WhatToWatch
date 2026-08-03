@@ -2,11 +2,11 @@
     "manifest_version": 3,
     "name": "WhatToWatch",
     "version": "1.0",
-    "description": "WhatToWatch is a tool that picks a random video from your Youtube WatchLater playlist (or from the playlist you are in the moment).",
+    "description": "WtW picks a random video from your Youtube WatchLater playlist or current playlist.",
 
     "action": {
         "default_popup": "popup.html",
-        "default_icon": "icons/icon48.png"
+        "default_icon": "icons/icons.png"
     },
 
     "permissions": ["activeTab", "storage"],
