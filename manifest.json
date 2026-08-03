@@ -9,8 +9,8 @@
         "default_icon": "icons/icon48.png"
     },
 
-    "permissions": ["activeTab", "storage"], //storage necesito o no?
-    "host_permissions": ["*://*.youtube.com/*"] //vull tb q funcioni a alres webs no? i m porti a yt?
+    "permissions": ["activeTab", "storage"],
+    "host_permissions": ["*://*.youtube.com/*"]
 }
 
 
