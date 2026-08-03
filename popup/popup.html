@@ -12,10 +12,12 @@
 <body>
     <h1>WhatToWatch</h1>
 
-    <p>Ready to pick a video!</p>
+    <p id="status">Ready to pick a video!</p>
 
-    <input type="checkbox" id="watchLaterCheckbox" placeholder="Pick from WatchLater playlist?">
-    
+    <input type="checkbox" id="watchLaterCheckbox">
+    <label for="watchLaterCheckbox" id="textCheckbox"> Pick from WatchLater playlist?</label>
+
+
     <button id="pickRandomVideo">Pick a random video</button>
     <script src="popup.js"></script>
 </body>
