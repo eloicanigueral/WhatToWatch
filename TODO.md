@@ -14,6 +14,8 @@
 ---
 ## extra:
 - if there are many videos in the playlist it might take a few seconds longer
+- try to reduce that time...
+    - also at loading the WL page to choose the video and then opening a video... is like double loading... try to reduce that time if notorious
 ---
 
 #### comit changes name:

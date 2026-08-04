@@ -70,6 +70,7 @@ button.addEventListener('click', function() { // when clicking the main button:
         //same logic as previous one (and obv as in the case where the checkbox is marked), only changes that this should open in a new page
         browser.tabs.create({ url: "https://www.youtube.com/playlist?list=WL" }); //this could be also a "promise" and use .then and inside the function if it has created succesfully
               //also inside i could check if the page has uploaded to view the length of the playlist... idk
+        openVideo("youtube.com", true);
         statusText.innerText = "New tab opened with the video!";
   
 
@@ -79,6 +80,12 @@ button.addEventListener('click', function() { // when clicking the main button:
         //i figured (inspecting the yt WL page) that all the videos are in blocks/elements named: "ytd-playlist-video-renderer"
         //and if i type: document.querySelectorAll('ytd-playlist-video-renderer') in the console i'm able to see all the videos (well.. not all, only the first 100..., have to fix that) -> if i scroll down a little it fixes so im gonna have to put a mini scroll in the script? or somethig
         //if i type the same .length i can see how many videos are there... (to choose a random number bettween 0 and that number)
+
+        //i keep investigating (and searching on google...) and now i know that once i have the video i want ( document.querySelectorAll('ytd-playlist-video-renderer')[n] ) i can get easily the link adding: .querySelector('a#video-title').href 
+              //explanation: the link is always in the href on the a "block", but there are different a blocks, the one we are interested in is the video-title one
+              // so it would end up like this: document.querySelectorAll('ytd-playlist-video-renderer')[n].querySelector('a#video-title').href    || where n is a random number between 0 and document.querySelectorAll('ytd-playlist-video-renderer').length
+              //ok.. i've changed the language and now video-title doesnt appear.. i suppose i have to use only a whithout any id name...
+                  // i could use: 'a[href*="/watch"]' -> this searches one that has got /watch in the href.. (/watch opens automatically a video...)
       }
 
     });
