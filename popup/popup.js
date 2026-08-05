@@ -43,22 +43,6 @@ function pickRandomVideo(){
 }
 
 
-function waitForTabLoad(tab, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab...
-  if (tab === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
-    browser.tabs.onUpdated.removeListener(waitForTabLoad); //necessary to remove the listener.. because if not it wouldnt stop never... and consume a lot of resources...
-    browser.scripting.executeScript({ //it exectues the function func in the target (witch is the yt page (w the playlist))
-      target: { tabId: tab },
-      func: pickRandomVideo
-    }).then(function(link) {
-
-      openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
-      
-    });
-
-  }
-}
-
-
 button.addEventListener('click', function() { // when clicking the main button:
     
   statusText.innerText = "Thinking.... ||| Working... "; //I THINK I HAVE TO DELETE THIS STATUS MSG (OR AT LEAST MODIFY IT....)
@@ -117,23 +101,29 @@ button.addEventListener('click', function() { // when clicking the main button:
               //also inside i could check if the page has uploaded to view the length of the playlist... idk
         openVideo(defaultUrl, true)
           .then(function(newTab){
+            
+            function waitForTabLoad(tab, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab...
+              if (tab === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
+
+                browser.tabs.onUpdated.removeListener(waitForTabLoad); //necessary to remove the listener.. because if not it wouldnt stop never... and consume a lot of resources...
+
+                browser.scripting.executeScript({ //it exectues the function func in the target (witch is the yt page (w the playlist))
+                  target: { tabId: tab },
+                  func: pickRandomVideo
+                }).then(function(link) {
+            
+                  //openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
+                  openVideo(defaultUrl);
+                  
+                });
+            
+              }
+            }
+
             browser.tabs.onUpdated.addListener(waitForTabLoad);
+
         });
         statusText.innerText = "New tab opened with the video!";
-  
-
-
-        //im gonna start w this one bc the other ones wont mesh... and i would have only to scroll to the bottom to see this... xD
-
-        //i figured (inspecting the yt WL page) that all the videos are in blocks/elements named: "ytd-playlist-video-renderer"
-        //and if i type: document.querySelectorAll('ytd-playlist-video-renderer') in the console i'm able to see all the videos (well.. not all, only the first 100..., have to fix that) -> if i scroll down a little it fixes so im gonna have to put a mini scroll in the script? or somethig
-        //if i type the same .length i can see how many videos are there... (to choose a random number bettween 0 and that number)
-
-        //i keep investigating (and searching on google...) and now i know that once i have the video i want ( document.querySelectorAll('ytd-playlist-video-renderer')[n] ) i can get easily the link adding: .querySelector('a#video-title').href 
-              //explanation: the link is always in the href on the a "block", but there are different a blocks, the one we are interested in is the video-title one
-              // so it would end up like this: document.querySelectorAll('ytd-playlist-video-renderer')[n].querySelector('a#video-title').href    || where n is a random number between 0 and document.querySelectorAll('ytd-playlist-video-renderer').length
-              //ok.. i've changed the language and now video-title doesnt appear.. i suppose i have to use only a whithout any id name...
-                  // i could use: 'a[href*="/watch"]' -> this searches one that has got /watch in the href.. (/watch opens automatically a video...)
       }
 
     });

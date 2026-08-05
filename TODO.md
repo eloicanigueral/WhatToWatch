@@ -19,6 +19,10 @@
 - try to reduce that time...
     - also at loading the WL page to choose the video and then opening a video... is like double loading... try to reduce that time if notorious
 ---
+## errors to fix:
+- if i opened a video and then i dont close the popup, if i click the video again it doesnt work.. it freezzers
+
+---
 
 #### comit changes name:
  ` create .gitignore + TODO.md and 'write' initial README.md `
