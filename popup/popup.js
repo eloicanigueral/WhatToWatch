@@ -3,7 +3,7 @@ const chbx = document.getElementById('watchLaterCheckbox')
 const statusText = document.getElementById('status');
 
 
-function openVideo(videoUrl, newTab=false){ //function to avoid repeating the same code to open the video
+function openVideo(videoUrl, newTab=false){ //function to avoid repeating the same code to open the video //i use the return to be able to use .then after calling this function
   if (newTab){
     return browser.tabs.create({ url: videoUrl }); //this could be also a "promise" and use .then and inside the function if it has created succesfully
 
@@ -13,8 +13,10 @@ function openVideo(videoUrl, newTab=false){ //function to avoid repeating the sa
   }
 }
 
+
 function pickRandomVideo(){
   //this is gonna run inside youtube page, so i cannot use anything about the popup.html....
+  
   //here i should use all what i have commented at the end... i copy it here:
           //im gonna start w this one bc the other ones wont mesh... and i would have only to scroll to the bottom to see this... xD
 
@@ -29,7 +31,7 @@ function pickRandomVideo(){
                   // i could use: 'a[href*="/watch"]' -> this searches one that has got /watch in the href.. (/watch opens automatically a video...)
 
   // PSEOUDOCODE HERE:
-  
+
   //first in doing the .legth to know the size
     //and i should make the scroll also.. butt to be do it later when all this works
 
@@ -39,6 +41,23 @@ function pickRandomVideo(){
 
   //here i have to return the href
 }
+
+
+function waitForTabLoad(tab, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab...
+  if (tab === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
+    browser.tabs.onUpdated.removeListener(waitForTabLoad); //necessary to remove the listener.. because if not it wouldnt stop never... and consume a lot of resources...
+    browser.scripting.executeScript({ //it exectues the function func in the target (witch is the yt page (w the playlist))
+      target: { tabId: tab },
+      func: pickRandomVideo
+    }).then(function(link) {
+
+      openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
+      
+    });
+
+  }
+}
+
 
 button.addEventListener('click', function() { // when clicking the main button:
     
@@ -96,7 +115,10 @@ button.addEventListener('click', function() { // when clicking the main button:
         //i think that's all.. jej
         //same logic as previous one (and obv as in the case where the checkbox is marked), only changes that this should open in a new page
               //also inside i could check if the page has uploaded to view the length of the playlist... idk
-        openVideo(defaultUrl, true);
+        openVideo(defaultUrl, true)
+          .then(function(newTab){
+            browser.tabs.onUpdated.addListener(waitForTabLoad);
+        });
         statusText.innerText = "New tab opened with the video!";
   
 
