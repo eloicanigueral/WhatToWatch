@@ -5,15 +5,40 @@ const statusText = document.getElementById('status');
 
 function openVideo(videoUrl, newTab=false){ //function to avoid repeating the same code to open the video
   if (newTab){
-    browser.tabs.create({ url: videoUrl }); //w a return in the beggining or not?
+    return browser.tabs.create({ url: videoUrl }); //this could be also a "promise" and use .then and inside the function if it has created succesfully
 
   } else {
-    browser.tabs.update({ url: videoUrl });
+    return browser.tabs.update({ url: videoUrl });
 
   }
 }
 
+function pickRandomVideo(){
+  //this is gonna run inside youtube page, so i cannot use anything about the popup.html....
+  //here i should use all what i have commented at the end... i copy it here:
+          //im gonna start w this one bc the other ones wont mesh... and i would have only to scroll to the bottom to see this... xD
 
+        //i figured (inspecting the yt WL page) that all the videos are in blocks/elements named: "ytd-playlist-video-renderer"
+        //and if i type: document.querySelectorAll('ytd-playlist-video-renderer') in the console i'm able to see all the videos (well.. not all, only the first 100..., have to fix that) -> if i scroll down a little it fixes so im gonna have to put a mini scroll in the script? or somethig
+        //if i type the same .length i can see how many videos are there... (to choose a random number bettween 0 and that number)
+
+        //i keep investigating (and searching on google...) and now i know that once i have the video i want ( document.querySelectorAll('ytd-playlist-video-renderer')[n] ) i can get easily the link adding: .querySelector('a#video-title').href 
+              //explanation: the link is always in the href on the a "block", but there are different a blocks, the one we are interested in is the video-title one
+              // so it would end up like this: document.querySelectorAll('ytd-playlist-video-renderer')[n].querySelector('a#video-title').href    || where n is a random number between 0 and document.querySelectorAll('ytd-playlist-video-renderer').length
+              //ok.. i've changed the language and now video-title doesnt appear.. i suppose i have to use only a whithout any id name...
+                  // i could use: 'a[href*="/watch"]' -> this searches one that has got /watch in the href.. (/watch opens automatically a video...)
+
+  // PSEOUDOCODE HERE:
+  
+  //first in doing the .legth to know the size
+    //and i should make the scroll also.. butt to be do it later when all this works
+
+  //once i get the length, pick a random number (should be easy...)
+
+  //search for the video with that index -> and look up to the <a> with [href*="/watch"]
+
+  //here i have to return the href
+}
 
 button.addEventListener('click', function() { // when clicking the main button:
     
@@ -24,6 +49,7 @@ button.addEventListener('click', function() { // when clicking the main button:
     .then(function(tabs){  //it can be better and cleaner if i use .then(openVid, onError); and then creating two differents functions outside... 
       
       let tab = tabs[0]; //okei because tabs is an array with the actual tab, where 0 is the first position. It's an object, so what we want is the url (later requested w/ tab.url)
+      let defaultUrl = "https://www.youtube.com/playlist?list=WL"; //DELETE WHEN NO MORE USING IT...
 
       if (tab.url.includes("youtube.com")){ //if active tab is yt.com || ALL THIS HAVE TO BE DONE IN THE SAME tab.url... //ARE WE ON YOUTUBE??
         //have to look if we're in a randompage/video or in a playlist or not
@@ -38,7 +64,7 @@ button.addEventListener('click', function() { // when clicking the main button:
 
             //pick random video from user's WL
 
-            browser.tabs.update({ url: "https://www.youtube.com/playlist?list=WL"}); //opened on the same page and from the WL
+            openVideo(defaultUrl);  //opened on the same page and from the WL
             // have to choose a link (random WL video) and then open it... (change previous lines...)
 
             statusText.innerText = "Playing random video from the Watch Later list";
@@ -50,6 +76,7 @@ button.addEventListener('click', function() { // when clicking the main button:
                 //logic would be: 1. entering the playlist, 2. get the number of videos (count them i suppouse), 3. choose one randomly and open it.
             // browser.tabs.update({ url: randomURL }); //it has to be a video from that playlist...
 
+            //openVideo(defaultUrl);  //HAVE TO CHANGE THE LINK TO THE PLAYLIST ONE... SO I COMMENT THIS ONE...
             statusText.innerText = "Playing random video from this playlist";
 
           }
@@ -58,7 +85,7 @@ button.addEventListener('click', function() { // when clicking the main button:
           // OPTION C: on yt, but not in any playlist, so video from WL
           //pick random video from user's WL
           //SAME LOGIC AS IN FIRST CASE (CHECKBOX ACTIVE...) -> LINE #36
-          browser.tabs.update({ url: "https://www.youtube.com/playlist?list=WL"}); //opened on the same page
+          openVideo(defaultUrl);  //opened on the same page
 
           statusText.innerText = "Random video opened in this tab";
         }
@@ -68,9 +95,8 @@ button.addEventListener('click', function() { // when clicking the main button:
         //pick a random video from user's WL
         //i think that's all.. jej
         //same logic as previous one (and obv as in the case where the checkbox is marked), only changes that this should open in a new page
-        browser.tabs.create({ url: "https://www.youtube.com/playlist?list=WL" }); //this could be also a "promise" and use .then and inside the function if it has created succesfully
               //also inside i could check if the page has uploaded to view the length of the playlist... idk
-        openVideo("youtube.com", true);
+        openVideo(defaultUrl, true);
         statusText.innerText = "New tab opened with the video!";
   
 
