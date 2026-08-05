@@ -5,7 +5,7 @@ const statusText = document.getElementById('status');
 
 function openVideo(videoUrl, newTab=false){ //function to avoid repeating the same code to open the video //i use the return to be able to use .then after calling this function
   if (newTab){
-    return browser.tabs.create({ url: videoUrl }); //this could be also a "promise" and use .then and inside the function if it has created succesfully
+    return browser.tabs.create({ url: videoUrl });
 
   } else {
     return browser.tabs.update({ url: videoUrl });
@@ -55,52 +55,69 @@ button.addEventListener('click', function() { // when clicking the main button:
       let defaultUrl = "https://www.youtube.com/playlist?list=WL"; //DELETE WHEN NO MORE USING IT...
 
       if (tab.url.includes("youtube.com")){ //if active tab is yt.com || ALL THIS HAVE TO BE DONE IN THE SAME tab.url... //ARE WE ON YOUTUBE??
-        //have to look if we're in a randompage/video or in a playlist or not
   
-        if (tab.url.includes("list=")){ //if we're on a playlist page, the url has something like: ?list=... //ARE WE IN A PLAYLIST?
+        if (tab.url.includes("list=")){ //if we're on a playlist page, the url has something like: list=... //ARE WE IN A PLAYLIST?
           
-          //MOST DIFFICULT I THINK.. TO DO LATER ON... but if we're in the WL playlist, the checkbox shouldnt appear....
+          //MOST DIFFICULT I THINK.. TO DO LATER ON... but if we're in the WL playlist, the checkbox shouldnt appear.... !!!!!!!!!!!!!!!
 
-          //have to check if the checkbox is active...
-          if (/* checkbox is active (rand from WL) */ chbx.checked){  //if it has appeared we shouldnt be in WL page (have to do that..)
-            //OPTION A: On a playlist, but the user wants WL
+          if (chbx.checked){  //if it has appeared we shouldnt be in WL page (have to do that..)
+            //we are in a playlist, but user wants WL (because the checkbox is active)
 
-            //pick random video from user's WL
+            // have to choose a link (random WL video) and then open it... //i think its done, this comment can be deleted            
+            openVideo(defaultUrl, false) //opened on the same page and from the WL
+            .then(function(newTab){ // is a copy paste from the last one (the last else...) so if any change has to be done.. change all (also the first one.. checkbox)
+              
+              function waitForTabLoad(tab, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab... //i dont know if this "tab" interfires with the main tab used upper...
+                if (tab === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
+  
+                  browser.tabs.onUpdated.removeListener(waitForTabLoad); //necessary to remove the listener.. because if not it wouldnt stop never... and consume a lot of resources...
+  
+                  browser.scripting.executeScript({ //it exectues the function func in the target (witch is the yt page (w the playlist))
+                    target: { tabId: tab }, //i dont know if this "tab" interfires with the main tab used upper...
+                    func: pickRandomVideo
+                  }).then(function(link) {
+              
+                    //openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
+                    openVideo(defaultUrl); //HAVE TO DELETE THIS WHEN THE SCRIPT IS DONE
+                    
+                  });
+              
+                }
+              }
+  
+              browser.tabs.onUpdated.addListener(waitForTabLoad);
+          });
 
-            openVideo(defaultUrl);  //opened on the same page and from the WL
-            // have to choose a link (random WL video) and then open it... (change previous lines...)
 
             statusText.innerText = "Playing random video from the Watch Later list";
 
             
           } else { //pick random video from the current playlist
-            // OPTION B: Random video from the playlist
+
             //probably i should execute an script here to get the random video from the playlist we're currently  in...
                 //logic would be: 1. entering the playlist, 2. get the number of videos (count them i suppouse), 3. choose one randomly and open it.
-            // browser.tabs.update({ url: randomURL }); //it has to be a video from that playlist...
 
             //openVideo(defaultUrl);  //HAVE TO CHANGE THE LINK TO THE PLAYLIST ONE... SO I COMMENT THIS ONE...
+
+
+            //we are already in a page with the list/playlist uploaded, so isnt necessary to load enterily a new page...
+
+            browser.scripting.executeScript({ //it exectues the function func in the target (witch is the yt page (w the playlist))
+              target: { tabId: tab.id },
+              func: pickRandomVideo
+            }).then(function(link) {
+        
+              //openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
+              openVideo(defaultUrl); //HAVE TO DELETE THIS WHEN THE SCRIPT IS DONE
+              
+            });
             statusText.innerText = "Playing random video from this playlist";
 
           }
   
-        } else{ //we are in the main page orrrr in a video
-          // OPTION C: on yt, but not in any playlist, so video from WL
-          //pick random video from user's WL
-          //SAME LOGIC AS IN FIRST CASE (CHECKBOX ACTIVE...) -> LINE #36
-          openVideo(defaultUrl);  //opened on the same page
-
-          statusText.innerText = "Random video opened in this tab";
-        }
-
-  
-      } else { //NOW THIS MEANS WE ARE NOT IN youtube.com, SO ALL THIS HAVE TO BE DONE IN A NEW TAB/PAGE  // WE ARE NOT IN YOUTUBE
-        //pick a random video from user's WL
-        //i think that's all.. jej
-        //same logic as previous one (and obv as in the case where the checkbox is marked), only changes that this should open in a new page
-              //also inside i could check if the page has uploaded to view the length of the playlist... idk
-        openVideo(defaultUrl, true)
-          .then(function(newTab){
+        } else{ //we are on youtube, but not in any playlist -> random video from WL
+          openVideo(defaultUrl, false)
+          .then(function(newTab){ // is a copy paste from the last one (the last else...) so if any change has to be done.. change all (also the first one.. checkbox)
             
             function waitForTabLoad(tab, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab...
               if (tab === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
@@ -113,7 +130,7 @@ button.addEventListener('click', function() { // when clicking the main button:
                 }).then(function(link) {
             
                   //openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
-                  openVideo(defaultUrl);
+                  openVideo(defaultUrl); //HAVE TO DELETE THIS WHEN THE SCRIPT IS DONE
                   
                 });
             
@@ -121,7 +138,35 @@ button.addEventListener('click', function() { // when clicking the main button:
             }
 
             browser.tabs.onUpdated.addListener(waitForTabLoad);
+        });
 
+          statusText.innerText = "Random video opened in this tab";
+        }
+
+  
+      } else { //WE ARE NOT IN YOUTUBE -> so open a new tab & pick a random video from user's WL
+        openVideo(defaultUrl, true)
+          .then(function(newTab){
+            
+            function waitForTabLoad(tab, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab...
+              if (tab === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
+
+                browser.tabs.onUpdated.removeListener(waitForTabLoad); //necessary to remove the listener.. because if not it wouldnt stop never... and consume a lot of resources...
+
+                browser.scripting.executeScript({ //it exectues the function func in the target (witch is the yt page (w the playlist))
+                  target: { tabId: tab }, //i dont know if this "tab" interfires with the main tab used upper...
+                  func: pickRandomVideo
+                }).then(function(link) {
+            
+                  //openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
+                  openVideo(defaultUrl); //HAVE TO DELETE THIS WHEN THE SCRIPT IS DONE
+                  
+                });
+            
+              }
+            }
+
+            browser.tabs.onUpdated.addListener(waitForTabLoad);
         });
         statusText.innerText = "New tab opened with the video!";
       }
