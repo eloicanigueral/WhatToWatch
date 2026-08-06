@@ -32,16 +32,41 @@ function pickRandomVideo(){
 
   // PSEOUDOCODE HERE:
 
-  //first in doing the .legth to know the size
     //and i should make the scroll also.. butt to be do it later when all this works
+  let videos = document.querySelectorAll('ytd-playlist-video-renderer');
 
-  //once i get the length, pick a random number (should be easy...)
+  let i = videos.length; //is better this here oooor to put all the document.... . length at the beggining?
 
+  //once i get the length, pick a random number (should be easy...) // i think with Math.random()
+
+  let n = 5;
+  return videos[n].querySelector('a[href*="/watch"]').href;
   //search for the video with that index -> and look up to the <a> with [href*="/watch"]
-
   //here i have to return the href
 }
 
+function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to check....
+  
+  function waitForTabLoad(tabID, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab... //i dont know if this "tab" interfires with the main tab used upper...
+    if (tabID === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
+
+      browser.tabs.onUpdated.removeListener(waitForTabLoad); //necessary to remove the listener.. because if not it wouldnt stop never... and consume a lot of resources...
+
+      browser.scripting.executeScript({ //it exectues the function func in the target (witch is the yt page (w the playlist))
+        target: { tabId: tabID }, //i dont know if this "tab" interfires with the main tab used upper...
+        func: pickRandomVideo
+      }).then(function(link) {
+  
+        openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
+        //openVideo(defaultUrl); //HAVE TO DELETE THIS WHEN THE SCRIPT IS DONE
+        
+      });
+  
+    }
+  }
+
+  browser.tabs.onUpdated.addListener(waitForTabLoad);
+}
 
 button.addEventListener('click', function() { // when clicking the main button:
     
@@ -65,28 +90,7 @@ button.addEventListener('click', function() { // when clicking the main button:
 
             // have to choose a link (random WL video) and then open it... //i think its done, this comment can be deleted            
             openVideo(defaultUrl, false) //opened on the same page and from the WL
-            .then(function(newTab){ // is a copy paste from the last one (the last else...) so if any change has to be done.. change all (also the first one.. checkbox)
-              
-              function waitForTabLoad(tab, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab... //i dont know if this "tab" interfires with the main tab used upper...
-                if (tab === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
-  
-                  browser.tabs.onUpdated.removeListener(waitForTabLoad); //necessary to remove the listener.. because if not it wouldnt stop never... and consume a lot of resources...
-  
-                  browser.scripting.executeScript({ //it exectues the function func in the target (witch is the yt page (w the playlist))
-                    target: { tabId: tab }, //i dont know if this "tab" interfires with the main tab used upper...
-                    func: pickRandomVideo
-                  }).then(function(link) {
-              
-                    //openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
-                    openVideo(defaultUrl); //HAVE TO DELETE THIS WHEN THE SCRIPT IS DONE
-                    
-                  });
-              
-                }
-              }
-  
-              browser.tabs.onUpdated.addListener(waitForTabLoad);
-          });
+            .then(loadingTab);
 
 
             statusText.innerText = "Playing random video from the Watch Later list";
@@ -117,28 +121,7 @@ button.addEventListener('click', function() { // when clicking the main button:
   
         } else{ //we are on youtube, but not in any playlist -> random video from WL
           openVideo(defaultUrl, false)
-          .then(function(newTab){ // is a copy paste from the last one (the last else...) so if any change has to be done.. change all (also the first one.. checkbox)
-            
-            function waitForTabLoad(tab, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab...
-              if (tab === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
-
-                browser.tabs.onUpdated.removeListener(waitForTabLoad); //necessary to remove the listener.. because if not it wouldnt stop never... and consume a lot of resources...
-
-                browser.scripting.executeScript({ //it exectues the function func in the target (witch is the yt page (w the playlist))
-                  target: { tabId: tab },
-                  func: pickRandomVideo
-                }).then(function(link) {
-            
-                  //openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
-                  openVideo(defaultUrl); //HAVE TO DELETE THIS WHEN THE SCRIPT IS DONE
-                  
-                });
-            
-              }
-            }
-
-            browser.tabs.onUpdated.addListener(waitForTabLoad);
-        });
+          .then(loadingTab);
 
           statusText.innerText = "Random video opened in this tab";
         }
@@ -146,28 +129,7 @@ button.addEventListener('click', function() { // when clicking the main button:
   
       } else { //WE ARE NOT IN YOUTUBE -> so open a new tab & pick a random video from user's WL
         openVideo(defaultUrl, true)
-          .then(function(newTab){
-            
-            function waitForTabLoad(tab, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab...
-              if (tab === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
-
-                browser.tabs.onUpdated.removeListener(waitForTabLoad); //necessary to remove the listener.. because if not it wouldnt stop never... and consume a lot of resources...
-
-                browser.scripting.executeScript({ //it exectues the function func in the target (witch is the yt page (w the playlist))
-                  target: { tabId: tab }, //i dont know if this "tab" interfires with the main tab used upper...
-                  func: pickRandomVideo
-                }).then(function(link) {
-            
-                  //openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
-                  openVideo(defaultUrl); //HAVE TO DELETE THIS WHEN THE SCRIPT IS DONE
-                  
-                });
-            
-              }
-            }
-
-            browser.tabs.onUpdated.addListener(waitForTabLoad);
-        });
+          .then(loadingTab);
         statusText.innerText = "New tab opened with the video!";
       }
 
