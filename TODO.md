@@ -25,7 +25,10 @@
 ## errors to fix:
 - if i opened a video and then i dont close the popup, if i click the video again it doesnt work.. it freezzes
 - check what happens if the playlist (WL) is empty
-- ok.. fuck.. great error... if im in a playlist sometimes the "id" is: ytd-playlist-panel-video-renderer and not "ytd-playlist-video-renderer" (with the "panel" as an extra...)
+- ok.. fuck.. great error... if im in a playlist sometimes the "id" is: ytd-playlist-panel-video-renderer and not "ytd-playlist-video-renderer" (with the "panel" as an extra...) (FIXED)
+- NEW ERROR!: checkbox doesnt work.. (it goes directly to WL page.. ). its strange bc if i pick it already in WL page's it works well.. but if i pick it from a video doesnt work..
+    - the checkbox works well if i'm in yt main's page.. .but -> (see next errror)
+- ALSO ERROR: the normal button (without checkbox) doesent work from yt main's page.... (it also stays at WL main page)
 
 ---
 
