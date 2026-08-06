@@ -32,12 +32,12 @@ function pickRandomVideo(){
 
   // PSEOUDOCODE HERE:
 
-    //and i should make the scroll also.. butt to be do it later when all this works
+    //and i should make the scroll also.. butt to be do it later when all this works (it seems i dont need it... have tocheck)
   let videos = document.querySelectorAll('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer');
 
   let i = videos.length; //is better this here oooor to put all the document.... . length at the beggining?
 
-  //have to check if the length is larger than 0... else return null??? and a msg
+  if (i === 0) return null;
   let n = Math.floor(Math.random() * i);
 
   return videos[n].querySelector('a[href*="/watch"]').href;

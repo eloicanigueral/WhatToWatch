@@ -5,30 +5,29 @@
 
 
 ### popup
-    - mirar el funcionament de quan esta a una playlist.. tant del checkbox com dels ifs. pq si esta a una playlist normal o directament a la de WL surt lu mateix (i tb el checkbox...)
-    - Shauria de separar playlist random de la WL??? tipu tenir en compte o no? ... 
-    - HAVE to create a random numer generator... (to pick one from 0 to .length of the playlist)
-      - Create an script (with exectueScript??) to make all that?
-    - The fucking chechbox shouldnt appear always...
-        - if we're in the WL playlist, the checkbox shouldnt appear.... !!!!!!!!!!!!!!!
-        - if it appears, we shouldnt be in WL page (have to do that..)
-    - i dont know if the "tab" used in the "executeScript" interfires with the main tab used upper...
+- [ ] mirar el funcionament de quan esta a una playlist.. tant del checkbox com dels ifs. pq si esta a una playlist normal o directament a la de WL surt lu mateix (i tb el checkbox...)
+- [ ] Shauria de separar playlist random de la WL??? tipu tenir en compte o no? ... 
+- [x]HAVE to create a random numer generator... (to pick one from 0 to .length of the playlist)
+    - [X]Create an script (with exectueScript??) to make all that?
+- The fucking chechbox shouldnt appear always...
+    - if we're in the WL playlist, the checkbox shouldnt appear.... !!!!!!!!!!!!!!!
+    - if it appears, we shouldnt be in WL page (have to do that..)
 
 ---
 ## extra:
-- if there are many videos in the playlist it might take a few seconds longer
-- try to reduce that time...
+- [ ] if there are many videos in the playlist it might take a few seconds longer
+- [ ] try to reduce that time...
     - also at loading the WL page to choose the video and then opening a video... is like double loading... try to reduce that time if notorious
-- i dont know if i reppeat so much code (mainly with the executeScript...) have to check and try to reduce
-- also try to reduce loading time (i think its difficult bc it has to load 2 pages...)
+- [ ] also try to reduce loading time (i think its difficult bc it has to load 2 pages...)
+- [X] i dont know if i reppeat so much code have to check and try to reduce
 ---
 ## errors to fix:
-- if i opened a video and then i dont close the popup, if i click the video again it doesnt work.. it freezzes
+- [X] if i opened a video and then i dont close the popup, if i click the video again it doesnt work.. it freezzes (I THINK I FIXED IT.. NOT SURE)
 - check what happens if the playlist (WL) is empty
-- ok.. fuck.. great error... if im in a playlist sometimes the "id" is: ytd-playlist-panel-video-renderer and not "ytd-playlist-video-renderer" (with the "panel" as an extra...) (FIXED)
-- NEW ERROR!: checkbox doesnt work.. (it goes directly to WL page.. ). its strange bc if i pick it already in WL page's it works well.. but if i pick it from a video doesnt work..
+- [X] ok.. fuck.. great error... if im in a playlist sometimes the "id" is: ytd-playlist-panel-video-renderer and not "ytd-playlist-video-renderer" (with the "panel" as an extra...) (FIXED)
+- [x] checkbox doesnt work.. (it goes directly to WL page.. ). its strange bc if i pick it already in WL page's it works well.. but if i pick it from a video doesnt work..
     - the checkbox works well if i'm in yt main's page.. .but -> (see next errror)
-- ALSO ERROR: the normal button (without checkbox) doesent work from yt main's page.... (it also stays at WL main page)
+- [x] the normal button (without checkbox) doesent work from yt main's page.... (it also stays at WL main page)
 
 ---
 
