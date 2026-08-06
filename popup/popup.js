@@ -33,7 +33,7 @@ function pickRandomVideo(){
   // PSEOUDOCODE HERE:
 
     //and i should make the scroll also.. butt to be do it later when all this works
-  let videos = document.querySelectorAll('ytd-playlist-video-renderer');
+  let videos = document.querySelectorAll('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer');
 
   let i = videos.length; //is better this here oooor to put all the document.... . length at the beggining?
 
@@ -106,11 +106,11 @@ button.addEventListener('click', function() { // when clicking the main button:
               target: { tabId: tab.id },
               func: pickRandomVideo
             }).then(function(link) {
-              openVideo(defaultUrl);
-              statusText.innerText = link[0].result;
-              openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'              
+
+              openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'  
+              
             });
-            //statusText.innerText = "Playing random video from this playlist";
+            statusText.innerText = "Playing random video from this playlist";
 
           }
   
