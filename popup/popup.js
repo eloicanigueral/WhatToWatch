@@ -37,12 +37,10 @@ function pickRandomVideo(){
 
   let i = videos.length; //is better this here oooor to put all the document.... . length at the beggining?
 
-  //once i get the length, pick a random number (should be easy...) // i think with Math.random()
+  //have to check if the length is larger than 0... else return null??? and a msg
+  let n = Math.floor(Math.random() * i);
 
-  let n = 5;
   return videos[n].querySelector('a[href*="/watch"]').href;
-  //search for the video with that index -> and look up to the <a> with [href*="/watch"]
-  //here i have to return the href
 }
 
 function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to check....
@@ -57,9 +55,7 @@ function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!
         func: pickRandomVideo
       }).then(function(link) {
   
-        openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
-        //openVideo(defaultUrl); //HAVE TO DELETE THIS WHEN THE SCRIPT IS DONE
-        
+        openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
       });
   
     }
@@ -110,12 +106,11 @@ button.addEventListener('click', function() { // when clicking the main button:
               target: { tabId: tab.id },
               func: pickRandomVideo
             }).then(function(link) {
-        
-              //openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'
-              openVideo(defaultUrl); //HAVE TO DELETE THIS WHEN THE SCRIPT IS DONE
-              
+              openVideo(defaultUrl);
+              statusText.innerText = link[0].result;
+              openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'              
             });
-            statusText.innerText = "Playing random video from this playlist";
+            //statusText.innerText = "Playing random video from this playlist";
 
           }
   

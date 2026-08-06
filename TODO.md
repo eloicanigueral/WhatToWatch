@@ -24,6 +24,8 @@
 ---
 ## errors to fix:
 - if i opened a video and then i dont close the popup, if i click the video again it doesnt work.. it freezzes
+- check what happens if the playlist (WL) is empty
+- ok.. fuck.. great error... if im in a playlist sometimes the "id" is: ytd-playlist-panel-video-renderer and not "ytd-playlist-video-renderer" (with the "panel" as an extra...)
 
 ---
 
