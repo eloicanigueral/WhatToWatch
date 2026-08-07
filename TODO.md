@@ -31,6 +31,8 @@
 - [x] the normal button (without checkbox) doesent work from yt main's page.... (it also stays at WL main page)
     - [ ] okei sometimes it doesnt work.. so i didnt fixed at all...
 - [ ] dont know if its an error.. but if i close the popup while loading (all the process...) it cuts.. i think its normal, but try to automatizate
+- [ ] in google chrome, if i use it outside yt, it only loads the WL list, not open any video (i think is bc the html id...)
+    - try to fix it putting a delay before checking if the status of load is ccomplete
 
 ---
 
