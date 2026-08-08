@@ -51,8 +51,12 @@ function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!
         target: { tabId: tabID }, //i dont know if this "tab" interfires with the main tab used upper...
         func: pickRandomVideo
       }).then(function(link) {
-
-        openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
+        if (link === null){
+          statusText.innerText = "No video found, check if the playlist isn't empty and try again"
+        } else {
+          openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
+          statusText.innerText = "Video correctly loaded!"
+        }
 
       });
   
@@ -71,7 +75,7 @@ button.addEventListener('click', function() { // when clicking the main button:
     .then(function(tabs){  //it can be better and cleaner if i use .then(openVid, onError); and then creating two differents functions outside... 
       
       let tab = tabs[0]; //okei because tabs is an array with the actual tab, where 0 is the first position. It's an object, so what we want is the url (later requested w/ tab.url)
-      let defaultUrl = "https://www.youtube.com/playlist?list=WL"; //DELETE WHEN NO MORE USING IT...
+      let defaultUrl = "https://www.youtube.com/playlist?list=WL";
 
       if (tab.url.includes("youtube.com")){ //if active tab is yt.com || ALL THIS HAVE TO BE DONE IN THE SAME tab.url... //ARE WE ON YOUTUBE??
   
@@ -99,7 +103,7 @@ button.addEventListener('click', function() { // when clicking the main button:
               openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'  
               
             });
-            statusText.innerText = "Playing random video from this playlist";
+            //statusText.innerText = "Playing random video from this playlist";
 
           }
   
@@ -107,14 +111,14 @@ button.addEventListener('click', function() { // when clicking the main button:
           openVideo(defaultUrl, false)
           .then(loadingTab);
 
-          statusText.innerText = "Random video opened in this tab";
+          //statusText.innerText = "Random video opened in this tab";
         }
 
   
       } else { //WE ARE NOT IN YOUTUBE -> so open a new tab & pick a random video from user's WL
         openVideo(defaultUrl, true)
           .then(loadingTab);
-        statusText.innerText = "New tab opened with the video!";
+        //statusText.innerText = "New tab opened with the video!";
       }
 
     });
