@@ -19,6 +19,7 @@
 - [ ] **Checkbox Visibility:** Hide the checkbox if the user is already in the WL playlist.
     - [ ] Automatically uncheck the checkbox after a video is picked (without closing popup).
 - [ ] Fix/understand what happens if the popup is closed while loading (try to automate it so it doesn't interrupt).
+- [ ] check if scroll is really needed in long playlists  
 - [ ] Make the extension comptatible with other browsers (not only Firefox based ones)
     - [ ] Chrome
         - [ ] in google chrome, if i use it outside yt, it only loads the WL list, not open any video (i think is bc the html id...)
