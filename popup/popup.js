@@ -39,11 +39,11 @@ function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!
         target: { tabId: tabID }, //i dont know if this "tab" interfires with the main tab used upper...
         func: pickRandomVideo
       }).then(function(link) {
-        if (link === null){
-          statusText.innerText = "No video found, check if the playlist isn't empty and try again"
+        if (link[0].result === null){
+          statusText.innerText = "No video found, check if the playlist isn't empty and try again";
         } else {
           openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
-          statusText.innerText = "Video correctly loaded!"
+          statusText.innerText = "Video correctly loaded!";
         }
 
       });
@@ -87,9 +87,14 @@ button.addEventListener('click', function() { // when clicking the main button:
               target: { tabId: tab.id },
               func: pickRandomVideo
             }).then(function(link) {
-
-              openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'  
               
+              if (link[0].result === null){
+                statusText.innerText = "No video found, check if the playlist isn't empty and try again";
+              } else {
+                openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
+                statusText.innerText = "Video correctly loaded!";
+              openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'  
+              }
             });
             //statusText.innerText = "Playing random video from this playlist";
 
