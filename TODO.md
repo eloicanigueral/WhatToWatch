@@ -5,9 +5,9 @@
 
 ## Bugs to fix (v1.1)
 - [ ] Check what happens if the WL playlist is empty (implement the `null` check properly)
-- [] checkbox doesnt work.. (it goes directly to WL page.. ). its strange bc if i pick it already in WL page's it works well.. but if i pick it from a video doesnt work..
+- [ ] checkbox doesnt work.. (it goes directly to WL page.. ). its strange bc if i pick it already in WL page's it works well.. but if i pick it from a video doesnt work..
     - [ ] Add a delay on searching the random video (have to quit and check that...)
-- [] the normal button (without checkbox) doesent work from yt main's page.... (it also stays at WL main page)
+- [ ] the normal button (without checkbox) doesent work from yt main's page.... (it also stays at WL main page)
     - [ ] okei sometimes it doesnt work.. so i didnt fixed at all...
     - I THINK IT MIGHT BE PROBLEM OF THE PLAYLIST I AM... IF I TRY IT IN THE SAME WL IT DOESNT WORK WELL (but as far as i fix when the checkbox is shown it would be fixed...)
 
@@ -38,7 +38,7 @@
 #### manifest.json
 - [ ] necesito el storage com a permission?? o no? -> //em sera UTIL per recordar l'ultim video i no repetirlo per exemple..., o per recordar el checkbox de WL?...
 
-### popup
+#### popup
 - [ ] Decide if regular random playlists should be treated differently than the WL playlist.
 - [ ] mirar el funcionament de quan esta a una playlist.. tant del checkbox com dels ifs. pq si esta a una playlist normal o directament a la de WL surt lu mateix (i tb el checkbox...)
 - [ ] Shauria de separar playlist random de la WL??? tipu tenir en compte o no? ... 
@@ -60,5 +60,5 @@
 
 
 
-    #### comit changes name:
+#### comit changes name:
  ` Clean up & make TODO ez to read `
