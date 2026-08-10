@@ -16,18 +16,6 @@ function openVideo(videoUrl, newTab=false){ //function to avoid repeating the sa
 
 function pickRandomVideo(){
   //this is gonna run inside youtube page, so i cannot use anything about the popup.html....
-  
-
-  //i figured (inspecting the yt WL page) that all the videos are in blocks/elements named: "ytd-playlist-video-renderer"
-  //and if i type: document.querySelectorAll('ytd-playlist-video-renderer') in the console i'm able to see all the videos (well.. not all, only the first 100..., have to fix that) -> if i scroll down a little it fixes so im gonna have to put a mini scroll in the script? or somethig
-  //if i type the same .length i can see how many videos are there... (to choose a random number bettween 0 and that number)
-
-  //i keep investigating (and searching on google...) and now i know that once i have the video i want ( document.querySelectorAll('ytd-playlist-video-renderer')[n] ) i can get easily the link adding: .querySelector('a#video-title').href 
-        //explanation: the link is always in the href on the a "block", but there are different a blocks, the one we are interested in is the video-title one
-        // so it would end up like this: document.querySelectorAll('ytd-playlist-video-renderer')[n].querySelector('a#video-title').href    || where n is a random number between 0 and document.querySelectorAll('ytd-playlist-video-renderer').length
-        //ok.. i've changed the language and now video-title doesnt appear.. i suppose i have to use only a whithout any id name...
-            // i could use: 'a[href*="/watch"]' -> this searches one that has got /watch in the href.. (/watch opens automatically a video...)
-
 
     //and i should make the scroll also.. butt to be do it later when all this works (it seems i dont need it... have tocheck)
   let videos = document.querySelectorAll('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer');
@@ -51,8 +39,12 @@ function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!
         target: { tabId: tabID }, //i dont know if this "tab" interfires with the main tab used upper...
         func: pickRandomVideo
       }).then(function(link) {
-
-        openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
+        if (link[0].result === null){
+          statusText.innerText = "No video found, check if the playlist isn't empty and try again";
+        } else {
+          openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
+          statusText.innerText = "Video correctly loaded!";
+        }
 
       });
   
@@ -71,7 +63,7 @@ button.addEventListener('click', function() { // when clicking the main button:
     .then(function(tabs){  //it can be better and cleaner if i use .then(openVid, onError); and then creating two differents functions outside... 
       
       let tab = tabs[0]; //okei because tabs is an array with the actual tab, where 0 is the first position. It's an object, so what we want is the url (later requested w/ tab.url)
-      let defaultUrl = "https://www.youtube.com/playlist?list=WL"; //DELETE WHEN NO MORE USING IT...
+      let defaultUrl = "https://www.youtube.com/playlist?list=WL";
 
       if (tab.url.includes("youtube.com")){ //if active tab is yt.com || ALL THIS HAVE TO BE DONE IN THE SAME tab.url... //ARE WE ON YOUTUBE??
   
@@ -95,11 +87,16 @@ button.addEventListener('click', function() { // when clicking the main button:
               target: { tabId: tab.id },
               func: pickRandomVideo
             }).then(function(link) {
-
-              openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'  
               
+              if (link[0].result === null){
+                statusText.innerText = "No video found, check if the playlist isn't empty and try again";
+              } else {
+                openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
+                statusText.innerText = "Video correctly loaded!";
+              openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'  
+              }
             });
-            statusText.innerText = "Playing random video from this playlist";
+            //statusText.innerText = "Playing random video from this playlist";
 
           }
   
@@ -107,14 +104,14 @@ button.addEventListener('click', function() { // when clicking the main button:
           openVideo(defaultUrl, false)
           .then(loadingTab);
 
-          statusText.innerText = "Random video opened in this tab";
+          //statusText.innerText = "Random video opened in this tab";
         }
 
   
       } else { //WE ARE NOT IN YOUTUBE -> so open a new tab & pick a random video from user's WL
         openVideo(defaultUrl, true)
           .then(loadingTab);
-        statusText.innerText = "New tab opened with the video!";
+        //statusText.innerText = "New tab opened with the video!";
       }
 
     });
