@@ -14,18 +14,25 @@ function openVideo(videoUrl, newTab=false){ //function to avoid repeating the sa
   }
 }
 
-function pickRandomVideo(){
+async function pickRandomVideo(){ //try async function????????????????????????............................. to retry X times until saying video not found
   //this is gonna run inside youtube page, so i cannot use anything about the popup.html....
 
+  const maxRetries = 20;
+  const delay = 250;
+
+  for (let i = 0; i<maxRetries; i++){
+    let videos = document.querySelectorAll('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer');
     //and i should make the scroll also.. butt to be do it later when all this works (it seems i dont need it... have tocheck)
-  let videos = document.querySelectorAll('ytd-playlist-video-renderer, ytd-playlist-panel-video-renderer');
+    
+    if (videos.length > 0){
+      let n = Math.floor(Math.random() * videos.length);
 
-  let i = videos.length;
-
-  if (i === 0) return null;
-  let n = Math.floor(Math.random() * i);
-
-  return videos[n].querySelector('a[href*="/watch"]').href;
+      return videos[n].querySelector('a[href*="/watch"]').href;
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, delay)); //AI gave me this... :(  -> if yt hasn't charged the videos yet, wait 250ms and try again)   
+  }
+  return null;
 }
 
 function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to check....
@@ -39,7 +46,7 @@ function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!
         target: { tabId: tabID }, //i dont know if this "tab" interfires with the main tab used upper...
         func: pickRandomVideo
       }).then(function(link) {
-        if (link[0].result === null){
+        if (!link || link[0].result === null){
           statusText.innerText = "No video found, check if the playlist isn't empty and try again";
         } else {
           openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
@@ -88,7 +95,7 @@ button.addEventListener('click', function() { // when clicking the main button:
               func: pickRandomVideo
             }).then(function(link) {
               
-              if (link[0].result === null){
+              if (!link || link[0].result === null){
                 statusText.innerText = "No video found, check if the playlist isn't empty and try again";
               } else {
                 openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
