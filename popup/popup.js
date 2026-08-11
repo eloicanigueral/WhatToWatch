@@ -93,7 +93,6 @@ button.addEventListener('click', function() { // when clicking the main button:
               } else {
                 openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
                 statusText.innerText = "Video correctly loaded!";
-              openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'  
               }
             });
             //statusText.innerText = "Playing random video from this playlist";
