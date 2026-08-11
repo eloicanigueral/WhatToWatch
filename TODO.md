@@ -3,8 +3,7 @@
 
  # WhatToWatch - TODO List
 
-## Bugs to fix (v1.1)
-- [ ] Check what happens if the WL playlist is empty (implement the `null` check properly)
+## Bugs to fix (v1.2) (all this is bc the checkbox....:)
 - [ ] checkbox doesnt work.. (it goes directly to WL page.. ). its strange bc if i pick it already in WL page's it works well.. but if i pick it from a video doesnt work..
     - [ ] Add a delay on searching the random video (have to quit and check that...)
 - [ ] the normal button (without checkbox) doesent work from yt main's page.... (it also stays at WL main page)
@@ -19,6 +18,7 @@
 - [ ] **Checkbox Visibility:** Hide the checkbox if the user is already in the WL playlist.
     - [ ] Automatically uncheck the checkbox after a video is picked (without closing popup).
 - [ ] Fix/understand what happens if the popup is closed while loading (try to automate it so it doesn't interrupt).
+- [ ] check if scroll is really needed in long playlists  
 - [ ] Make the extension comptatible with other browsers (not only Firefox based ones)
     - [ ] Chrome
         - [ ] in google chrome, if i use it outside yt, it only loads the WL list, not open any video (i think is bc the html id...)
@@ -56,6 +56,7 @@
 
 - [X] if i opened a video and then i dont close the popup, if i click the video again it doesnt work.. it freezzes (I THINK I FIXED IT.. NOT SURE)
 - [X] if im in a playlist sometimes the "id" is: ytd-playlist-panel-video-renderer and not "ytd-playlist-video-renderer" (with the "panel" as an extra...) (FIXED)
+- [x] Check what happens if the WL playlist is empty (implement the `null` check properly)
 
 
 
