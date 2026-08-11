@@ -11,10 +11,6 @@ h1 {
     color: #333;
 }
 
-#textCheckbox { /*sure there's a better way...*/
-    font-size: 11px;
-}
-
 button {
     background-color: #da3737;
     color: white;
