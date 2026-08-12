@@ -62,7 +62,7 @@ function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!
 
 button.addEventListener('click', function() { // when clicking the main button:
     
-  statusText.innerText = "Thinking.... ||| Working... "; //I THINK I HAVE TO DELETE THIS STATUS MSG (OR AT LEAST MODIFY IT....)
+  statusText.innerText = "Loading... (please wait and do not close this popup)";
 
   browser.tabs.query({active: true, currentWindow: true})
     .then(function(tabs){  //it can be better and cleaner if i use .then(openVid, onError); and then creating two differents functions outside... 

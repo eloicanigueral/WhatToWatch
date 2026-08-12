@@ -3,21 +3,20 @@
 
  # WhatToWatch - TODO List
 
-## Bugs to fix (v1.2) (all this is bc the checkbox....:)
+## Bugs to fix 
 - [ ] checkbox doesnt work.. (it goes directly to WL page.. ). its strange bc if i pick it already in WL page's it works well.. but if i pick it from a video doesnt work..
-    - [ ] Add a delay on searching the random video (have to quit and check that...)
-- [ ] the normal button (without checkbox) doesent work from yt main's page.... (it also stays at WL main page)
-    - [ ] okei sometimes it doesnt work.. so i didnt fixed at all...
-    - I THINK IT MIGHT BE PROBLEM OF THE PLAYLIST I AM... IF I TRY IT IN THE SAME WL IT DOESNT WORK WELL (but as far as i fix when the checkbox is shown it would be fixed...)
 
 
 <!-- #### not that important (v1.1+) -->
-
+## working on
+-
 ---
 ## FEATURES:
 - [ ] **Checkbox Visibility:** Hide the checkbox if the user is already in the WL playlist.
     - [ ] Automatically uncheck the checkbox after a video is picked (without closing popup).
 - [ ] Fix/understand what happens if the popup is closed while loading (try to automate it so it doesn't interrupt).
+    - If it is in the main page and has to load the WL main list... it keeps in that list (same when opening it from a diff page)
+    - If i'm in a video already from a playlist, it loads automatically the video (despite closing the popup)
 - [ ] check if scroll is really needed in long playlists  
 - [ ] Make the extension comptatible with other browsers (not only Firefox based ones)
     - [ ] Chrome
@@ -40,8 +39,7 @@
 
 #### popup
 - [ ] Decide if regular random playlists should be treated differently than the WL playlist.
-- [ ] mirar el funcionament de quan esta a una playlist.. tant del checkbox com dels ifs. pq si esta a una playlist normal o directament a la de WL surt lu mateix (i tb el checkbox...)
-- [ ] Shauria de separar playlist random de la WL??? tipu tenir en compte o no? ... 
+    - [ ] mirar el funcionament de quan esta a una playlist.. tant del checkbox com dels ifs. pq si esta a una playlist normal o directament a la de WL surt lu mateix (i tb el checkbox...)
 - [x] HAVE to create a random numer generator... (to pick one from 0 to .length of the playlist)
     - [X] Create an script (with exectueScript??) to make all that?
 - [ ] The fucking chechbox shouldnt appear always...
@@ -58,8 +56,11 @@
 - [X] if im in a playlist sometimes the "id" is: ytd-playlist-panel-video-renderer and not "ytd-playlist-video-renderer" (with the "panel" as an extra...) (FIXED)
 - [x] Check what happens if the WL playlist is empty (implement the `null` check properly)
 
+- [x] Add a delay on searching the random video (have to quit and check that...)
+- [x] the normal button (without checkbox) doesent work from yt main's page.... (it also stays at WL main page)
+    - I THINK IT MIGHT BE PROBLEM OF THE PLAYLIST I AM... IF I TRY IT IN THE SAME WL IT DOESNT WORK WELL (but as far as i fix when the checkbox is shown it would be fixed...)
 
 
 
 #### comit changes name:
- ` Clean up & make TODO ez to read `
+ ` check TODO list and mark as errors as fixed `
