@@ -17,6 +17,9 @@
 - [ ] Fix/understand what happens if the popup is closed while loading (try to automate it so it doesn't interrupt).
     - If it is in the main page and has to load the WL main list... it keeps in that list (same when opening it from a diff page)
     - If i'm in a video already from a playlist, it loads automatically the video (despite closing the popup)
+        - [ ] to fix it... i'd have to move the 3 functs (load, wait, and exe) in a **background script** (look at that) to not depend on the popup being open
+            - in firefox background.script; in chrome service_worker 
+            - popup should advice through browser.runtime.sendMessage
 - [ ] check if scroll is really needed in long playlists  
     - Inside a video (with a playlist) it queries all the videos in the playlist. If are in the main playlist list (without any video playing), i think it only shows the first 100... (which is so much, but not all of them...)
 - [ ] Make the extension comptatible with other browsers (not only Firefox based ones)
