@@ -59,6 +59,6 @@ function loadingTab(newTab){
 
 browser.runtime.onMessage.addListener( (message, sender, sendResponse) => {
     if (message.type === 'newTab'){
-        browser.tabs.create({ url: message.url }).then(loadingTab);
+        browser.tabs.create({ url: message.url, active: false }).then(loadingTab); //this false is so the popup doesn't not closing (in Chrome)
     }
 });
