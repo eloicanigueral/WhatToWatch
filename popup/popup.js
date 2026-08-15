@@ -103,8 +103,13 @@ button.addEventListener('click', function() { // when clicking the main button:
 
   
       } else { //WE ARE NOT IN YOUTUBE -> so open a new tab & pick a random video from user's WL
-        openVideo(defaultUrl, true)
-          .then(loadingTab);
+        browser.runtime.sendMessage({
+          type: "newTab",
+          url: defaultUrl
+        });
+        
+        //openVideo(defaultUrl, true)
+        //  .then(loadingTab);
         //statusText.innerText = "New tab opened with the video!";
       }
 
