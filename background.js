@@ -9,7 +9,7 @@ function openVideo(videoUrl, newTab=false){ //function to avoid repeating the sa
     }
 }
 
-async function pickRandomVideo(){ //try async function????????????????????????............................. to retry X times until saying video not found
+async function pickRandomVideo(){ //to retry X times until saying video not found
     //this is gonna run inside youtube page, so i cannot use anything about the popup.html....
 
     const maxRetries = 20;
@@ -30,7 +30,7 @@ async function pickRandomVideo(){ //try async function????????????????????????..
     return null;
 }
 
-function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to check....
+function loadingTab(newTab){
     
     function waitForTabLoad(tabID, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab...
     if (tabID === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte
@@ -42,10 +42,10 @@ function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!
         func: pickRandomVideo
         }).then(function(link) {
         if (link[0].result === null){
-            statusText.innerText = "No video found, check if the playlist isn't empty and try again";
+            //statusText.innerText = "No video found, check if the playlist isn't empty and try again"; //-----------------------------------------------------have to look how to do this...
         } else {
             openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
-            statusText.innerText = "Video correctly loaded!";
+            //statusText.innerText = "Video correctly loaded!"; //-----------------------------------------------------have to look how to do this...
         }
 
         });
@@ -60,7 +60,5 @@ function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!
 browser.runtime.onMessage.addListener( (message, sender, sendResponse) => {
     if (message.type === 'newTab'){
         browser.tabs.create({ url: message.url }).then(loadingTab);
-
-        //sendResponse(video); //it'd be the link[0] i think
     }
 });

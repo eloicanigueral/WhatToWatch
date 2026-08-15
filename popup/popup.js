@@ -13,7 +13,7 @@ function openVideo(videoUrl, newTab=false){ //function to avoid repeating the sa
   }
 }
 
-async function pickRandomVideo(){ //try async function????????????????????????............................. to retry X times until saying video not found
+async function pickRandomVideo(){ //to retry X times until saying video not found
   //this is gonna run inside youtube page, so i cannot use anything about the popup.html....
 
   const maxRetries = 20;
@@ -34,7 +34,7 @@ async function pickRandomVideo(){ //try async function????????????????????????..
   return null;
 }
 
-function loadingTab(newTab){ //not sure if this actually works correctly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to check....
+function loadingTab(newTab){
   
   function waitForTabLoad(tabID, tabStatus) { //first one is the actual page that has changed, the second one is the status of the tab...
     if (tabID === newTab.id && tabStatus.status === "complete") { //check if the tab is the tab we want, and ALSO if it has uploaded correctly until being compelte

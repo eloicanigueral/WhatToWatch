@@ -4,17 +4,15 @@
  # WhatToWatch - TODO List
 
 ## Bugs to fix
-- [ ] in chrome... if i open the video from outside of yt... when changing the window, the popup closes automatically
--> is directly related to ->
-- [ ] Fix/understand what happens if the popup is closed while loading (try to automate it so it doesn't interrupt).
-    - If it is in the main page and has to load the WL main list... it keeps in that list (same when opening it from a diff page)
-    - If i'm in a video already from a playlist, it loads automatically the video (despite closing the popup)
-        - [ ] to fix it... i'd have to move the 3 functs (load, wait, and exe) in a **background script** (look at that) to not depend on the popup being open
-            - in firefox background.script; in chrome service_worker 
-            - popup should advice through browser.runtime.sendMessage
+- [ ] In chrome the popup automatically closes.... dont know if it affects, not right? -> well.. in the case the playlist is empty, it should show up the StatusText... 
+- [ ] theres an error in the statusText that is not defined (in the background.js), so it doesnt upload...
+    - [ ] i could update the statusText on the popup.js.. but i should know exactly if it have gone well and encoutered a video.
 
 ## other to work on
-- in chrome, the css it looks a bit ugly (the corners are not rounded)...
+- [ ] in chrome, the css it looks a bit ugly (the corners are not rounded)...
+- [ ] shall i put the other cases also in the background.js??
+    - OBVIOUSLY YESSS!!!! -> at least in the case outside a playlist...
+    - and i suppouse (in a future), in the case of the checkbox
 
 ---
 ## FEATURES:
@@ -32,6 +30,7 @@
 - [ ] checkbox doesnt work.. (it goes directly to WL page.. ). its strange bc if i pick it already in WL page's it works well.. but if i pick it from a video doesnt work..
 - [ ] Add `storage` permission to remember the last played video (prevent repeats) or save the checkbox state
 - [ ] **Reduce Loading Time:** The double loading (loading WL page, choosing video, then opening) takes too long. Explore faster alternatives.
+        - In chrome it goes faster than in Firefox
     - [ ] if there are many videos in the playlist it might take a few seconds longer
     - [ ] try to reduce that time if notorious
 - [ ] **Autoplay:** Decide if the video should play automatically or wait for the user to start it.
@@ -66,6 +65,12 @@
 - [x] the normal button (without checkbox) doesent work from yt main's page.... (it also stays at WL main page)
     - I THINK IT MIGHT BE PROBLEM OF THE PLAYLIST I AM... IF I TRY IT IN THE SAME WL IT DOESNT WORK WELL (but as far as i fix when the checkbox is shown it would be fixed...)
 
+- [X] Fix/understand what happens if the popup is closed while loading (try to automate it so it doesn't interrupt).
+    - If it is in the main page and has to load the WL main list... it keeps in that list (same when opening it from a diff page)
+    - If i'm in a video already from a playlist, it loads automatically the video (despite closing the popup)
+        - [x] to fix it... i'd have to move the 3 functs (load, wait, and exe) in a **background script** (look at that) to not depend on the popup being open
+            - in firefox background script; in chrome service_worker 
+            - popup should advice through browser.runtime.sendMessage
 
 
 #### comit changes name:
