@@ -4,7 +4,6 @@
  # WhatToWatch - TODO List
 
 ## Bugs to fix
-- [ ] In chrome the popup automatically closes.... dont know if it affects, not right? -> well.. in the case the playlist is empty, it should show up the StatusText... 
 
 ## other to work on
 - [ ] in chrome, the css it looks a bit ugly (the corners are not rounded)...
@@ -73,6 +72,7 @@
     - [x] i could update the statusText on the popup.js.. but i should know exactly if it have gone well and encoutered a video.
     - i think i could fix it with msg from back to popup... with type: status and text (there the message)
         - and then in the popup the rundime.onmessage... (function(msg){ if msg.type === status statustext...=msg.text})
+- [ ] In chrome the popup automatically closes.... dont know if it affects, not right? -> well.. in the case the playlist is empty, it should show up the StatusText... 
 
 
 #### comit changes name:
