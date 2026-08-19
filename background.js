@@ -9,7 +9,7 @@ function openVideo(videoUrl, newTab=false){ //function to avoid repeating the sa
     }
 }
 
-async function pickRandomVideo(){ //to retry X times until saying video not found
+async function pickRandomVideo(){ //to retry X times until saying video not foundn --------------------------------------- I CAN PUT A MSG (ON THE STATUSTEXT) HERE KIND OF: Wait, searching the video (or like that...?)
     //this is gonna run inside youtube page, so i cannot use anything about the popup.html....
 
     const maxRetries = 20;
@@ -25,7 +25,7 @@ async function pickRandomVideo(){ //to retry X times until saying video not foun
         return videos[n].querySelector('a[href*="/watch"]').href;
     }
     
-    await new Promise(resolve => setTimeout(resolve, delay)); //AI gave me this... :(  -> if yt hasn't charged the videos yet, wait 250ms and try again)   
+    await new Promise(resolve => setTimeout(resolve, delay)); //AI gave me this... :(  -> if yt hasn't charged the videos yet, wait 250ms and try again)   -------------- think i could reduce that time
     }
     return null;
 }
@@ -42,10 +42,16 @@ function loadingTab(newTab){
         func: pickRandomVideo
         }).then(function(link) {
         if (link[0].result === null){
-            //statusText.innerText = "No video found, check if the playlist isn't empty and try again"; //-----------------------------------------------------have to look how to do this...
+            browser.runtime.sendMessage({
+                type: "status",
+                text: "No video found, check if the playlist isn't empty and try again"
+            });
         } else {
             openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
-            //statusText.innerText = "Video correctly loaded!"; //-----------------------------------------------------have to look how to do this...
+            browser.runtime.sendMessage({
+                type: "status",
+                text: "New tab opened with the video!"
+            });
         }
 
         });
@@ -57,7 +63,7 @@ function loadingTab(newTab){
 }
 
 
-browser.runtime.onMessage.addListener( (message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener( (message) => {
     if (message.type === 'newTab'){
         browser.tabs.create({ url: message.url}).then(loadingTab);
     }

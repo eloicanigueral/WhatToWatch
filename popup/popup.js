@@ -60,6 +60,12 @@ function loadingTab(newTab){
   browser.tabs.onUpdated.addListener(waitForTabLoad);
 }
 
+browser.runtime.onMessage.addListener( (message) => {
+  if (message.type === 'status'){
+    statusText.innerText = message.text;
+  }
+});
+
 button.addEventListener('click', function() { // when clicking the main button:
     
   statusText.innerText = "Loading... (please wait and do not close this popup)";
@@ -107,10 +113,6 @@ button.addEventListener('click', function() { // when clicking the main button:
           type: "newTab",
           url: defaultUrl
         });
-        
-        //openVideo(defaultUrl, true)
-        //  .then(loadingTab);
-        //statusText.innerText = "New tab opened with the video!";
       }
 
     });
