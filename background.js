@@ -50,7 +50,7 @@ function loadingTab(newTab){
             openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'        
             browser.runtime.sendMessage({
                 type: "status",
-                text: "New tab opened with the video!"
+                text: "Video correctly loaded!"
             });
         }
 
@@ -66,5 +66,30 @@ function loadingTab(newTab){
 browser.runtime.onMessage.addListener( (message) => {
     if (message.type === 'newTab'){
         browser.tabs.create({ url: message.url}).then(loadingTab);
+        //statusText.innerText =  "New tab opened with the video!";
+    } else if (message.type === 'fromWL'){
+        browser.tabs.update({ url: message.url }).then(loadingTab);
+        //statusText.innerText = "Random video opened in this tab";
+    } else if (message.type === 'currentPlaylist'){
+        
+        //we are already in a page with the list/playlist uploaded, so isnt necessary to load enterily a new page...
+        browser.scripting.executeScript({ //it exectues the function func in the target (which is the yt page (w the playlist))
+            target: { tabId: message.id },
+            func: pickRandomVideo
+        }).then(function(link) {
+        
+        if (link[0].result === null){
+            browser.runtime.sendMessage({
+                type: "status",
+                text: "No video found, check if the playlist isn't empty and try again"
+            });         
+        } else {
+            openVideo(link[0].result); //now it has to open in the same page, that's why there's not the 'true'  
+            browser.runtime.sendMessage({
+                type: "status",
+                text: "Playing random video from this playlist"
+            });
+        }
+        });
     }
 });

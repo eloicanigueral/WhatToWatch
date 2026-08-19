@@ -5,10 +5,6 @@
 
 ## Bugs to fix
 - [ ] In chrome the popup automatically closes.... dont know if it affects, not right? -> well.. in the case the playlist is empty, it should show up the StatusText... 
-- [ ] theres an error in the statusText that is not defined (in the background.js), so it doesnt upload...
-    - [ ] i could update the statusText on the popup.js.. but i should know exactly if it have gone well and encoutered a video.
-    - i think i could fix it with msg from back to popup... with type: status and text (there the message)
-        - and then in the popup the rundime.onmessage... (function(msg){ if msg.type === status statustext...=msg.text})
 
 ## other to work on
 - [ ] in chrome, the css it looks a bit ugly (the corners are not rounded)...
@@ -73,6 +69,10 @@
         - [x] to fix it... i'd have to move the 3 functs (load, wait, and exe) in a **background script** (look at that) to not depend on the popup being open
             - in firefox background script; in chrome service_worker 
             - popup should advice through browser.runtime.sendMessage
+- [x] theres an error in the statusText that is not defined (in the background.js), so it doesnt upload...
+    - [x] i could update the statusText on the popup.js.. but i should know exactly if it have gone well and encoutered a video.
+    - i think i could fix it with msg from back to popup... with type: status and text (there the message)
+        - and then in the popup the rundime.onmessage... (function(msg){ if msg.type === status statustext...=msg.text})
 
 
 #### comit changes name:
